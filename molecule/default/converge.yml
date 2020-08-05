@@ -7,6 +7,12 @@
     # Allow swap in test environments (hard to control in some Docker envs).
     kubernetes_kubelet_extra_args: "--fail-swap-on=false --cgroup-driver=cgroupfs"
     docker_install_compose: false
+    proxy_env:
+      http_proxy: "{{ lookup('env','http_proxy') }}"
+      https_proxy: "{{ lookup('env','https_proxy') }}"
+      ftp_proxy: "{{ lookup('env','ftp_proxy') }}"
+      no_proxy: "{{ lookup('env','no_proxy') }}"
+  environment: "{{ proxy_env }}"
 
   pre_tasks:
     - name: Update apt cache.
